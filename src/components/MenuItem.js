@@ -3,6 +3,7 @@ import axios from 'axios';
 import Navbar from './include/Nab';
 import { Jumbotron, Table, Button, Container } from 'reactstrap';
 import ModalItemUpdate from './include/ModalItemUpdate';
+import ModalItemCreate from './include/ModalItemCreate';
 
 export default class MenuItem extends Component {
 	constructor(props) {
@@ -12,7 +13,15 @@ export default class MenuItem extends Component {
 		};
 	}
 
-	handledelete = (propA) => () => {};
+	handledelete = (propA) => (e) => {
+		e.preventDefault();
+		console.log(propA);
+		axios
+			.delete('http://localhost:3000/item/delete' + propA)
+			.then((response) => {
+				window.location.reload(false);
+			});
+	};
 
 	componentDidMount() {
 		axios.get('http://localhost:3000/item/all').then((response) => {
@@ -29,6 +38,7 @@ export default class MenuItem extends Component {
 				<Jumbotron fluid>
 					<Container>
 						<h1 className="display-3">MenuItem Control</h1>
+						<ModalItemCreate />
 						<Table>
 							<thead>
 								<tr>
