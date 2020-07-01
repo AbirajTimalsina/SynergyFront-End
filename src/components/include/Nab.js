@@ -24,8 +24,8 @@ export default function Nab() {
 	const toggle = () => setIsOpen(!isOpen);
 
 	return (
-		<Navbar color="light" light expand="md" style={{ marginBottom: 10 }}>
-			<NavbarBrand href="/dashboard">GameEssential Admin Panal</NavbarBrand>
+		<Navbar color="info" light expand="md" style={{ marginBottom: 10 }}>
+			<NavbarBrand href="/dashboard"> Admin Panal</NavbarBrand>
 			<NavbarToggler onClick={toggle} />
 			<Collapse isOpen={isOpen} navbar>
 				<Nav className="mr-auto" navbar>
@@ -51,7 +51,8 @@ export default function Nab() {
 					</UncontrolledDropdown>
 				</Nav>
 
-				<Button onClick={handleLogout}>Logout</Button>
+				<Button  color ='danger'
+				onClick={handleLogout}>Logout</Button>
 			</Collapse>
 		</Navbar>
 	);

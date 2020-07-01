@@ -56,7 +56,7 @@ export default function ModalItemUpdate(props) {
 
 	return (
 		<div>
-			<Button color="primary" onClick={toggle}>
+			<Button outline color="primary" onClick={toggle}>
 				Update
 			</Button>
 			<Modal isOpen={modal} toggle={toggle}>

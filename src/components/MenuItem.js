@@ -17,7 +17,7 @@ export default class MenuItem extends Component {
 		e.preventDefault();
 		console.log(propA);
 		axios
-			.delete('http://localhost:3000/item/delete' + propA)
+			.delete('http://localhost:3000/item/itemdelete/' + propA)
 			.then((response) => {
 				window.location.reload(false);
 			});
@@ -37,10 +37,10 @@ export default class MenuItem extends Component {
 				<Navbar />
 				<Jumbotron fluid>
 					<Container>
-						<h1 className="display-3">MenuItem Control</h1>
+					<h1 className="display-5"> Menu Item Control</h1>
 						<ModalItemCreate />
-						<Table>
-							<thead>
+						<Table hover>
+							<thead class="thead-dark">
 								<tr>
 									<th>Image</th>
 									<th>Item Name</th>
@@ -48,6 +48,7 @@ export default class MenuItem extends Component {
 									<th>Item Ingredient</th>
 									<th>Update</th>
 									<th>Delete</th>
+									
 								</tr>
 							</thead>
 							<tbody>
@@ -68,7 +69,7 @@ export default class MenuItem extends Component {
 										<td>
 											{' '}
 											<Button
-												color="danger"
+												 outline color="danger"
 												onClick={this.handledelete(item._id)}
 											>
 												Delete

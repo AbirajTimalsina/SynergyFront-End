@@ -56,7 +56,9 @@ export default function ModalItemCreate() {
 
 	return (
 		<div>
-			<Button color="primary" style={{ width: 150 }} onClick={toggle}>
+			<Button className="Btn_Create" 
+			outline color="success" 
+			style={{ width: 150 }} onClick={toggle}>
 				Create Item
 			</Button>
 			<Modal isOpen={modal} toggle={toggle}>
