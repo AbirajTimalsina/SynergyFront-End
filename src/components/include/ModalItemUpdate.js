@@ -55,7 +55,7 @@ export default function ModalItemUpdate(props) {
 	};
 
 	return (
-		<div>
+		<React.Fragment>
 			<Button outline color="primary" onClick={toggle}>
 				Update
 			</Button>
@@ -145,6 +145,6 @@ export default function ModalItemUpdate(props) {
 					</Button>
 				</ModalFooter>
 			</Modal>
-		</div>
+		</React.Fragment>
 	);
 }

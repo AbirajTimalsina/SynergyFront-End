@@ -55,10 +55,14 @@ export default function ModalItemCreate() {
 	};
 
 	return (
-		<div>
-			<Button className="Btn_Create" 
-			outline color="success" 
-			style={{ width: 120 }} onClick={toggle}>
+		<React.Fragment>
+			<Button
+				className="Btn_Create"
+				outline
+				color="success"
+				style={{ width: 120 }}
+				onClick={toggle}
+			>
 				Create Item
 			</Button>
 			<Modal isOpen={modal} toggle={toggle}>
@@ -139,6 +143,6 @@ export default function ModalItemCreate() {
 					</Button>
 				</ModalFooter>
 			</Modal>
-		</div>
+		</React.Fragment>
 	);
 }
