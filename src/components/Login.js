@@ -62,7 +62,6 @@ export default class Login extends Component {
 
 		if (!localStorage.getItem('logged')) {
 			this.setState({ isloggedin: true });
-			console.log(this.state.isloggedin);
 		}
 	};
 

@@ -4,6 +4,7 @@ import Navbar from './include/Nab';
 import { Jumbotron, Table, Button, Container } from 'reactstrap';
 import ModalItemUpdate from './include/ModalItemUpdate';
 import ModalItemCreate from './include/ModalItemCreate';
+import AdminRestrict from './include/AdminRestrict';
 
 export default class MenuItem extends Component {
 	constructor(props) {
@@ -34,10 +35,11 @@ export default class MenuItem extends Component {
 	render() {
 		return (
 			<div>
+				<AdminRestrict />
 				<Navbar />
 				<Jumbotron fluid>
 					<Container>
-					<h1 className="display-5"> Menu Item Control</h1>
+						<h1 className="display-5"> Menu Item Control</h1>
 						<ModalItemCreate />
 						<Table hover>
 							<thead class="thead-dark">
@@ -48,7 +50,6 @@ export default class MenuItem extends Component {
 									<th>Item Ingredient</th>
 									<th>Update</th>
 									<th>Delete</th>
-									
 								</tr>
 							</thead>
 							<tbody>
@@ -69,7 +70,8 @@ export default class MenuItem extends Component {
 										<td>
 											{' '}
 											<Button
-												 outline color="danger"
+												outline
+												color="danger"
 												onClick={this.handledelete(item._id)}
 											>
 												Delete
