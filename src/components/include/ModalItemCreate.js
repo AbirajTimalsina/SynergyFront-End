@@ -15,7 +15,7 @@ import {
 	Input,
 } from 'reactstrap';
 
-export default function ModalItemCreate() {
+export default function ModalItemCreate({ updateList }) {
 	const [modal, setmodal] = useState(false);
 	const [items, setitems] = useState({});
 	const toggle = () => {
@@ -52,6 +52,7 @@ export default function ModalItemCreate() {
 				window.location.reload(false);
 			})
 			.catch((err) => console.log(err.response));
+		updateList();
 	};
 
 	return (

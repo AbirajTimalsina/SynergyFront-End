@@ -25,12 +25,16 @@ export default class MenuItem extends Component {
 	};
 
 	componentDidMount() {
+		this.getAllItem();
+	}
+
+	getAllItem = () => {
 		axios.get('http://localhost:3000/item/all').then((response) => {
 			this.setState({
 				items: response.data,
 			});
 		});
-	}
+	};
 
 	render() {
 		return (
@@ -40,9 +44,9 @@ export default class MenuItem extends Component {
 				<Jumbotron fluid>
 					<Container>
 						<h1 className="display-5"> Menu Item Control</h1>
-						<ModalItemCreate />
+						<ModalItemCreate updateList={this.getAllItem} />
 						<Table hover>
-							<thead class="thead-dark">
+							<thead className="thead-dark">
 								<tr>
 									<th>Image</th>
 									<th>Item Name</th>
@@ -59,13 +63,17 @@ export default class MenuItem extends Component {
 											<img
 												src={`http://localhost:3000/uploads/${item.itempicture}`}
 												style={{ width: 50, height: 50 }}
+												alt="Item"
 											/>
 										</td>
 										<td>{item.itemname}</td>
 										<td>{item.itemprice}</td>
 										<td>{item.itemingredient}</td>
 										<td>
-											<ModalItemUpdate props={item} />
+											<ModalItemUpdate
+												props={item}
+												updateList={this.getAllItem}
+											/>
 										</td>
 										<td>
 											{' '}

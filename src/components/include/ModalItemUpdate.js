@@ -15,9 +15,9 @@ import {
 	Input,
 } from 'reactstrap';
 
-export default function ModalItemUpdate(props) {
+export default function ModalItemUpdate({ props, updateList }) {
 	const [modal, setmodal] = useState(false);
-	const [items, setitems] = useState(props.props);
+	const [items, setitems] = useState(props);
 	const toggle = () => {
 		setmodal(!modal);
 	};
@@ -49,7 +49,7 @@ export default function ModalItemUpdate(props) {
 			.put('http://localhost:3000/item/update', items)
 			.then((response) => {
 				toggle();
-				window.location.reload(false);
+				updateList();
 			})
 			.catch((err) => console.log(err.response));
 	};
@@ -72,6 +72,7 @@ export default function ModalItemUpdate(props) {
 							<img
 								src={`http://localhost:3000/uploads/${items.itempicture}`}
 								style={{ width: 150, height: 150 }}
+								alt="Item "
 							/>
 						</Col>
 						<FormGroup row>
