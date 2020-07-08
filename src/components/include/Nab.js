@@ -51,8 +51,9 @@ export default function Nab() {
 					</UncontrolledDropdown>
 				</Nav>
 
-				<Button  color ='danger'
-				onClick={handleLogout}>Logout</Button>
+				<Button color="danger" onClick={handleLogout}>
+					Logout
+				</Button>
 			</Collapse>
 		</Navbar>
 	);

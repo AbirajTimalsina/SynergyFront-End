@@ -23,7 +23,7 @@ export default class Login extends Component {
 				phonenumber: '',
 				password: '',
 			},
-			isloggedin: 'false',
+			isloggedin: '',
 		};
 	}
 
@@ -41,6 +41,12 @@ export default class Login extends Component {
 				}
 			})
 			.catch((err) => console.log(err.response));
+
+		this.timerid = setInterval(() => this.setState({ isloggedin: '' }), 5000);
+	}
+
+	componentWillUnmount() {
+		clearInterval(this.timerid);
 	}
 
 	handleChange = (e) => {
@@ -56,23 +62,21 @@ export default class Login extends Component {
 			.then((response) => {
 				if (response.data.status === 'Successfully logged in') {
 					localStorage.setItem('logged', 'redirect me');
-					window.location = '/dashboard';
+					this.setState({ isloggedin: 'logged' });
+				} else {
+					this.setState({ isloggedin: 'notlogged' });
 				}
 			});
-
-		if (!localStorage.getItem('logged')) {
-			this.setState({ isloggedin: true });
-		}
 	};
 
 	render() {
-		if (localStorage.getItem('logged')) {
-			return <Redirect to="/dashboard" />;
-		}
-		return (
+		return this.state.isloggedin === 'logged' ||
+			localStorage.getItem('logged') ? (
+			<Redirect to="/dashboard" />
+		) : (
 			<div>
 				<div className="container">
-					{this.state.isloggedin === true ? (
+					{this.state.isloggedin === 'notlogged' ? (
 						<Alert color="danger">Either username or password incorrect</Alert>
 					) : (
 						<div> </div>
