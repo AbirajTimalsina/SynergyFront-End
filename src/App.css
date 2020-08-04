@@ -41,3 +41,19 @@
   margin-left: 530px;
   margin-top: -80px;
 }
+
+
+.bg {
+  background-image: url("./images/bgapp.jpg");
+  height: 100vh;
+  width: 202.5vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+
+  }
+  .loginmain
+{
+  background-color: #61dafb;
+}

@@ -15,7 +15,7 @@ import {
 	Input,
 } from 'reactstrap';
 
-export default function ModalItemCreate({ updateList }) {
+export default function ModalItemCreate() {
 	const [modal, setmodal] = useState(false);
 	const [items, setitems] = useState({});
 	const toggle = () => {
@@ -52,18 +52,13 @@ export default function ModalItemCreate({ updateList }) {
 				window.location.reload(false);
 			})
 			.catch((err) => console.log(err.response));
-		updateList();
 	};
 
 	return (
-		<React.Fragment>
-			<Button
-				className="Btn_Create"
-				outline
-				color="success"
-				style={{ width: 120 }}
-				onClick={toggle}
-			>
+		<div>
+			<Button className="Btn_Create" 
+			outline color="success" 
+			style={{ width: 150, marginLeft: 950 }} onClick={toggle}>
 				Create Item
 			</Button>
 			<Modal isOpen={modal} toggle={toggle}>
@@ -144,6 +139,6 @@ export default function ModalItemCreate({ updateList }) {
 					</Button>
 				</ModalFooter>
 			</Modal>
-		</React.Fragment>
+		</div>
 	);
 }

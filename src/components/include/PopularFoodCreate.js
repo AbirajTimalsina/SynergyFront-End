@@ -15,9 +15,9 @@ import {
 	Input,
 } from 'reactstrap';
 
-export default function ModalItemUpdate(props) {
+export default function ModalItemCreate() {
 	const [modal, setmodal] = useState(false);
-	const [items, setitems] = useState(props.props);
+	const [items, setitems] = useState({});
 	const toggle = () => {
 		setmodal(!modal);
 	};
@@ -33,20 +33,19 @@ export default function ModalItemUpdate(props) {
 			.post('http://localhost:3000/upload', data)
 			.then((response) => {
 				setitems({
-					_id: items._id,
-					itemname: items.itemname,
-					itemprice: items.itemprice,
-					itemingredient: items.itemingredient,
-					itempicture: response.data.filename,
+					popularfoodname: items.itemname,
+					popularfoodprice: items.itemprice,
+					popularfoodpicture: response.data.filename,
 				});
 			})
 			.catch((err) => console.log(err.response));
 	};
 
-	const update = (e) => {
+	const create = (e) => {
 		e.preventDefault();
+		console.log(items);
 		axios
-			.put('http://localhost:3000/item/update', items)
+			.post('http://localhost:3000/popularfood/', items)
 			.then((response) => {
 				toggle();
 				window.location.reload(false);
@@ -56,11 +55,13 @@ export default function ModalItemUpdate(props) {
 
 	return (
 		<div>
-			<Button outline color="primary" onClick={toggle}>
-				Update
+			<Button className="Btn_Create" 
+			outline color="success" 
+			style={{ width: 150, marginLeft: 950  }} onClick={toggle}>
+				Create Item
 			</Button>
 			<Modal isOpen={modal} toggle={toggle}>
-				<ModalHeader toggle={toggle}>Edit Item</ModalHeader>
+				<ModalHeader toggle={toggle}>Create New Dishes Food List </ModalHeader>
 				{/* toggle in modalheader gives x button */}
 				<ModalBody>
 					<Form
@@ -68,12 +69,6 @@ export default function ModalItemUpdate(props) {
 						method="post"
 						style={{ width: '100%', margin: '0 auto' }}
 					>
-						<Col sm="12" md={{ size: 6, offset: 4 }} className="mb-3">
-							<img
-								src={`http://localhost:3000/uploads/${items.itempicture}`}
-								style={{ width: 150, height: 150 }}
-							/>
-						</Col>
 						<FormGroup row>
 							<Label sm={3}> Item Name</Label>
 
@@ -82,8 +77,8 @@ export default function ModalItemUpdate(props) {
 									type="text"
 									name="itemname"
 									id="itemname"
-									value={items.itemname}
 									placeholder="Enter item name"
+									alt
 									onChange={handleChange}
 								></Input>
 							</Col>
@@ -96,22 +91,7 @@ export default function ModalItemUpdate(props) {
 									type="number"
 									name="itemprice"
 									id="itemprice"
-									value={items.itemprice}
 									placeholder="Enter item price"
-									onChange={handleChange}
-								></Input>
-							</Col>
-						</FormGroup>
-						<FormGroup row>
-							<Label sm={3}> Item ingredient</Label>
-
-							<Col sm={9}>
-								<Input
-									type="textarea"
-									name="itemingredient"
-									id="itemingredient"
-									value={items.itemingredient}
-									placeholder="Enter item ingredient"
 									onChange={handleChange}
 								></Input>
 							</Col>
@@ -137,8 +117,8 @@ export default function ModalItemUpdate(props) {
 					</Form>
 				</ModalBody>
 				<ModalFooter>
-					<Button color="info" onClick={update}>
-						Save
+					<Button color="info" onClick={create}>
+						Create
 					</Button>
 					<Button color="danger" onClick={toggle}>
 						Cancel

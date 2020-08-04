@@ -1,14 +1,34 @@
 import React, { Component } from 'react';
 import Navbar from './include/Nab';
-import AdminRestrict from './include/AdminRestrict';
+import { Jumbotron, Table, Container, Modal, ModalHeader, ModalBody, ModalFooter, Button, Input, CustomInput, FormGroup, } from 'reactstrap';
+import Axios from 'axios';
 
 export default class Dashboard extends Component {
 	render() {
 		return (
 			<div>
-				<AdminRestrict />
 				<Navbar />
-			</div>
+				<p>
+			
+				<Modal>
+                    <ModalHeader >
+                        Edit Fast Food Details
+                    </ModalHeader>
+                    <ModalBody className="editoperation"  >
+                        <FormGroup>
+                            <Input name='fastfoodname' type='text'
+                            value="aaa"/>
+                        </FormGroup>                                  
+                    </ModalBody>  
+                    <ModalFooter>
+                        <Button color='primary'>
+                            Update Information</Button>
+                    </ModalFooter>
+                </Modal>
+				
+				</p>
+				</div>
+
 		);
 	}
 }

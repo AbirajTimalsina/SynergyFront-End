@@ -1,138 +1,94 @@
-import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
-import axios from 'axios';
-import Background from '../images/loginbackground.jpg';
+import React from "react";
+import { MDBInput, MDBBtn, MDBCol, MDBCard,label,icon } from "mdbreact";
+import { BrowserRouter as Router, withRouter } from "react-router-dom";
+import LoginbackgroundImage from '../images/loginbackground.jpg'
 
-import { Col, Form, FormGroup, Input, Button, Badge, Alert } from 'reactstrap';
-
-const adminData = {
-	fullname: 'admin admin',
-	phonenumber: 'admin',
-	email: 'admin@admin',
-	password: 'admin',
-	qa: {
-		question: 'What is your secret key?',
-		answer: 'admin',
-	},
+const usersJson = {
+  description: "Login and passwords of users",
+  users: {
+    admin: {
+      password: "admin",
+      type: "test"
+    }
+  }
 };
-export default class Login extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			user: {
-				phonenumber: '',
-				password: '',
-			},
-			isloggedin: '',
-		};
-	}
 
-	async componentDidMount() {
-		axios
-			.get('http://localhost:3000/users/profile/' + adminData.phonenumber)
-			.then((response) => {
-				if (!response.data) {
-					axios
-						.post('http://localhost:3000/users/signup', adminData)
-						.then((response) => {
-							console.log('admin was just created');
-						})
-						.catch((err) => console.log(err.response));
-				}
-			})
-			.catch((err) => console.log(err.response));
+class Login extends React.Component {
+  state = {
+    userName: "",
+    password: "",
+    usersJson: {}
+  };
+  componentDidMount() {
+    this.setState({ usersJson });
+  }
 
-		this.timerid = setInterval(() => this.setState({ isloggedin: '' }), 5000);
-	}
+  getLoginData = (value, type) =>
+    this.setState({
+      [type]: value
+    });
 
-	componentWillUnmount() {
-		clearInterval(this.timerid);
-	}
+  onFormSubmit = e => {
+    e.preventDefault();
+    const { usersJson, userName, password } = this.state;
+    const filterUserName = Object.keys(usersJson.users).filter(
+      e => e === userName
+    );
+    if (
+      filterUserName.length > 0 &&
+      usersJson.users[userName].password === password
+    ) {
+      this.props.history.push("dashboard");
+      window.localStorage.setItem(
+        "user",
+        JSON.stringify(usersJson.users[userName])
+      );
+    } else {
+      alert("Wrong login or password");
+    }
+  };
+  render() {
+    return (
+      <Router>
+      <div  className="bg">
+      <MDBCol>
+      <div >
+      <p className="h1 text-center mb-4"  style={{paddingTop:65, color:"white"}}>Welcome.....Admin</p>
+          <form onSubmit={this.onFormSubmit} >
+            <p className="h3 text-center mb-4"  style={{paddingTop:75, color:"#2BBBAD"}}>Sign in</p>
+            <div style={{marginLeft:395 , color:"#2BBBAD", width:720, justification:"center"}}>
+              <MDBInput
+                label="Type your email"
+                icon="envelope"
+                group
+                type="text"
+                validate
+                error="wrong"
+                success="right"
+                getValue={value => this.getLoginData(value, "userName")}
+              />
+              <MDBInput
+                label="Type your password"
+                icon="lock"
+                group
+                type="password"
+                validate
+                getValue={value => this.getLoginData(value, "password")}
+              />
+            </div>
+            <div className="text-center">
+              <MDBBtn type="submit" color ='dark ' onClick={this.onFormSubmit}>
+                Login
+              </MDBBtn>
+            </div>
+          </form>
+          </div>
+        </MDBCol>
+        </div>
 
-	handleChange = (e) => {
-		this.setState({
-			user: { ...this.state.user, [e.target.name]: e.target.value },
-		});
-	};
-
-	submitForm = (e) => {
-		e.preventDefault();
-		axios
-			.post('http://localhost:3000/users/login', this.state.user)
-			.then((response) => {
-				if (response.data.status === 'Successfully logged in') {
-					localStorage.setItem('logged', 'redirect me');
-					this.setState({ isloggedin: 'logged' });
-				} else {
-					this.setState({ isloggedin: 'notlogged' });
-				}
-			});
-	};
-
-	render() {
-		return this.state.isloggedin === 'logged' ||
-			localStorage.getItem('logged') ? (
-			<Redirect to="/dashboard" />
-		) : (
-			<div>
-				<div className="container">
-					{this.state.isloggedin === 'notlogged' ? (
-						<Alert color="danger">Either username or password incorrect</Alert>
-					) : (
-						<div> </div>
-					)}
-					<div
-						className="jumbotron"
-						style={{
-							height: 'fit-content',
-							backgroundImage: 'url(' + Background + ')',
-							backgroundSize: 'cover',
-						}}
-					>
-						<Form>
-							<FormGroup style={{ width: '50%', margin: '20px auto' }}>
-								<div style={{ color: 'white' }}>
-									<h1>LOGIN</h1>
-									<h4>Username</h4>
-								</div>
-								<Input
-									type="username"
-									name="phonenumber"
-									id="username"
-									placeholder="username here..."
-									onChange={this.handleChange}
-								/>
-								<h4 style={{ color: 'white' }}>Password</h4>
-								<Input
-									type="password"
-									name="password"
-									id="password"
-									placeholder="password"
-									//only give values if you want it there to seen like example in profile
-									onChange={this.handleChange}
-								/>
-
-								{/* <FormFeedback>You will not be able to see this</FormFeedback> */}
-								<Badge color="primary">
-									Please enter your Login Information
-								</Badge>
-								<br />
-								<Button
-									color="secondary"
-									size="lg"
-									onClick={this.submitForm}
-									style={{ marginTop: 10 }}
-								>
-									Log In
-								</Button>
-							</FormGroup>
-						</Form>
-
-						<hr style={{ border: '10', backgroundColor: '#ffffff' }} />
-						<Col sm={6} style={{ margin: 'auto' }}></Col>
-					</div>
-				</div>
-			</div>
-		);
-	}
+      </Router>
+    );
+  }
 }
+
+export default withRouter(Login);
